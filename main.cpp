@@ -1,13 +1,24 @@
 #include <iostream>
+#include <unordered_map>
 #include <string>
+// TODO: Remember to do something here
 using namespace std;
 
+typedef unordered_map<string, string> CredentialMap;
 // Prototypes
-bool is_valid_credentials(string, string);
+bool is_valid_credentials(string, string, CredentialMap);
 
 
 int main()
 {
+	CredentialMap logins =
+	{
+		{"robert", "password123"},
+		{"anoosh", "snuffles456"},
+		{"ajsam", "0987654321"},
+		{"rsamo", "rsamo"}
+	};
+
 	string username, password;
 
 	cout << "Enter username: ";
@@ -16,7 +27,7 @@ int main()
 	cout << "Enter password: ";
 	cin >> password;
 
-	if (is_valid_credentials(username, password))
+	if (is_valid_credentials(username, password, logins))
 	{
 		cout << "\u001b[2J";
 		cout << "\nMy deepest, darkest secret is that I'm a potato.\n";
@@ -31,9 +42,15 @@ int main()
 	return 0;
 }
 
-bool is_valid_credentials(string uname, string passwd)
+bool is_valid_credentials(string uname, string passwd, CredentialMap logins)
 {
-	if (uname == "robert" && passwd == "password123")
+	// Create iterator
+	/*unordered_map<string, string>::iterator it;
+
+	it = logins.find(uname);*/
+	auto search = logins.find(uname);
+
+	if (search != logins.end() && search->second == passwd)
 	{
 		return true;
 	}
