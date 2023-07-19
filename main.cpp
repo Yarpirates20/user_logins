@@ -1,16 +1,23 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
-// TODO: Remember to do something here
+#include <functional>
+#include "md5.h"
+#include "sha256.h"
 using namespace std;
 
 typedef unordered_map<string, string> CredentialMap;
+
 // Prototypes
 bool is_valid_credentials(string, string, CredentialMap);
 
 
 int main()
 {
+	string steveslist = "steveslist";
+	cout << "md5 of 'steveslist': " << md5("steveslist") << endl;
+	cout << "sha256('" << steveslist << "'):" << sha256(steveslist) << endl;
+
 	CredentialMap logins =
 	{
 		{"robert", "password123"},
