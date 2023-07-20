@@ -1,17 +1,15 @@
 #include <iostream>
-#include <iomanip>
-#include <unordered_map>
+//#include <iomanip>
+//#include <unordered_map>
 #include <string>
-//#include <functional>
 #include <fstream>
-#include <sstream>
 #include <nlohmann/json.hpp>
-#include "md5.h"
+//#include "md5.h"
 #include "sha256.h"
 using namespace std;
 using json = nlohmann::json;
 
-typedef unordered_map<string, string> CredentialMap;
+//typedef unordered_map<string, string> CredentialMap;
 
 // Prototypes
 bool is_valid_credentials(string, string);
