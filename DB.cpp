@@ -33,6 +33,33 @@ int DB::create_database()
     else
     {
         fprintf(stderr, "Opened database successfully\n");
-        return(1);
     }
+
+    sqlite3_close(db);
+}
+
+int DB::create_table()
+{
+    string sql = "CREATE TABLE users("
+        "USERNAME VARCHAR,"
+        "PASSWORD_HASH VARCHAR);";
+
+    int exit = 0;
+    exit = sqlite3_open(db_name.c_str(), &db);
+
+    char* messageError;
+    exit = sqlite3_exec(db, sql.c_str(), NULL, 0, &messageError);
+
+    if (exit != SQLITE_OK)
+    {
+        cerr << "Error Create Table " << endl;
+        sqlite3_free(messageError);
+    }
+    else
+    {
+        cout << "Table created successfully" << endl;
+    }
+
+    sqlite3_close(db);
+    return 0;
 }

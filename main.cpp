@@ -28,7 +28,11 @@ int main(int argc, char* argv[])
 	d_base.create_database();
 
 	cout << "Database created at " << db_name << endl;
-		
+
+	d_base.create_table();
+
+
+
 	string username, password;
 
 	// ##### DEBUG COMMENT OUT ##### 

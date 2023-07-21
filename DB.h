@@ -14,5 +14,6 @@ public:
 	void set_db_name();
 	std::string get_name();
 	int create_database();
+	int create_table();
 };
 
