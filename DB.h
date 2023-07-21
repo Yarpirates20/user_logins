@@ -6,12 +6,13 @@
 class DB
 {
 private:
-	std::string db_name;
+	const char* db_name;
 	sqlite3 *db;
 
 public:
 	DB() = default;
 	void set_db_name();
 	std::string get_name();
+	int create_database(string);
 };
 

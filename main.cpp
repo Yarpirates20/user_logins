@@ -8,6 +8,7 @@
 #include <sqlite3.h>
 //#include "md5.h"
 #include "sha256.h"
+#include "DB.h"
 using namespace std;
 using json = nlohmann::json;
 
