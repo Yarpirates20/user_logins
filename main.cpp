@@ -18,14 +18,16 @@ using json = nlohmann::json;
 bool is_valid_credentials(string, string);
 
 
-int main()
+int main(int argc, char* argv[])
 {
 	DB d_base;
 	d_base.set_db_name();
 
 	string db_name = d_base.get_name();
 
-	d_base.create_database(db_name);
+	d_base.create_database();
+
+	cout << "Database created at " << db_name << endl;
 		
 	string username, password;
 

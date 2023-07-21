@@ -9,10 +9,10 @@ void DB::set_db_name()
     string name;
     cout << "Enter database name: ";
     getline(cin, name);
-
     
+    string dir = "C:\\Users\\rsamo\\test\\";
 
-    db_name = name.c_str();
+    db_name = dir.append(name);
 }
 
 std::string DB::get_name()
@@ -20,9 +20,10 @@ std::string DB::get_name()
     return db_name;
 }
 
-int DB::create_database(string name)
+int DB::create_database()
 {
-    int rc = sqlite3_open(name.c_str(), &db);
+
+    int rc = sqlite3_open(db_name.c_str(), &db);
     
     if (rc)
     {
