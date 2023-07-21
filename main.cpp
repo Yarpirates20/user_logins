@@ -6,8 +6,6 @@
 #include <nlohmann/json.hpp>
 #include <stdio.h>
 #include <sqlite3.h>
-
-
 //#include "md5.h"
 #include "sha256.h"
 using namespace std;
