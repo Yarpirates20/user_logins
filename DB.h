@@ -13,6 +13,6 @@ public:
 	DB() = default;
 	void set_db_name();
 	std::string get_name();
-	int create_database(string);
+	int create_database(std::string);
 };
 

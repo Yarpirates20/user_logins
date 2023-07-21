@@ -20,6 +20,12 @@ bool is_valid_credentials(string, string);
 
 int main()
 {
+	DB d_base;
+	d_base.set_db_name();
+
+	string db_name = d_base.get_name();
+
+	d_base.create_database(db_name);
 		
 	string username, password;
 

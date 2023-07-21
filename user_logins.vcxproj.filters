@@ -42,4 +42,7 @@
   <ItemGroup>
     <None Include="logins.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\..\vclib\sqlite3\sqlite3.lib" />
+  </ItemGroup>
 </Project>
