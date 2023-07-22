@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include "sha256.h"
+#include <sqlite3.h>
+#include <format>
 using namespace std;
 
 void User::set_username()
@@ -33,4 +35,46 @@ void User::input_password()
 std::string User::get_hash()
 {
 	return hashed_password_input;
+}
+
+int User::add_to_table(std::string uname, std::string pwd_hash, DB dname)
+{
+
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+	string sql;
+
+	// Open database
+	rc = sqlite3_open(dname.get_name().c_str(), &db);
+
+	if (rc)
+	{
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return (0);
+	}
+	else
+	{
+		fprintf(stderr, "Opened database successfully\n");
+	}
+
+	// Create SQL statement
+	sql = format("INSERT INTO users (username, password_hash) " \
+		"VALUES ('{}', '{}' );", username, hashed_password_input);
+
+	// Exectute SQL statement
+	rc = sqlite3_exec(db, sql.c_str(), NULL, 0, &zErrMsg);
+
+	if (rc != SQLITE_OK)
+	{
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	}
+	else
+	{
+		fprintf(stdout, "Records created successfully\n");
+	}
+
+	sqlite3_close(db);
+	return 0;
 }

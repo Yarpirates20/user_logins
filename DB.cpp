@@ -113,6 +113,7 @@ int DB::table_exists()
     return 0;
 }
 
+
 bool DB::db_exists()
 {
     auto path = fs::path(db_name);

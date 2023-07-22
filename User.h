@@ -12,7 +12,7 @@ public:
 	std::string get_username();
 	void input_password();
 	std::string get_hash();
-	void add_to_table(std::string, std::string);
+	int add_to_table(std::string, std::string, DB);
 
 };
 
