@@ -2,7 +2,9 @@
 #include <iostream>
 #include <sqlite3.h>
 #include <string>
+#include <filesystem>
 using namespace std;
+namespace fs = std::filesystem;
 
 void DB::set_db_name()
 {
@@ -62,4 +64,57 @@ int DB::create_table()
 
     sqlite3_close(db);
     return 0;
+}
+
+int DB::callback(void* data, int argc, char** argv, char** azColName)
+{
+    int i;
+    fprintf(stderr, "%s: ", (const char*)data);
+
+    for (i = 0; i < argc; i++)
+    {
+        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+    }
+
+    printf("\n");
+    return 0;
+}
+
+int DB::table_exists()
+{
+    string sql = "SELECT * FROM sqlite_master WHERE name = 'users';";
+
+    int rc = sqlite3_open(db_name.c_str(), &db);
+
+    if (rc)
+    {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        return(0);
+    }
+    else
+    {
+        fprintf(stderr, "Opened database successfully\n");
+    }
+
+    // Execute SQL statement
+    rc = sqlite3_exec(db, sql.c_str(), callback, (void*)data, &z_Err_Msg);
+
+    if (rc != SQLITE_OK)
+    {
+        fprintf(stderr, "SQL error: %s\n", z_Err_Msg);
+        sqlite3_free(z_Err_Msg);
+    }
+    else
+    {
+        fprintf(stdout, "Operation done successfully\n");
+    }
+
+    sqlite3_close(db);
+    return 0;
+}
+
+bool DB::db_exists()
+{
+    auto path = fs::path(db_name);
+    return fs::exists(path);
 }

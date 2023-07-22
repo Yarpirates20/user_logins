@@ -24,12 +24,38 @@ int main(int argc, char* argv[])
 	d_base.set_db_name();
 
 	string db_name = d_base.get_name();
+	char overwrite;
+
+	if (d_base.db_exists())
+	{
+
+		cout << db_name << " is all ready an existing database.\n\n";
+
+		d_base.table_exists();
+
+		cout << "\n\n**Overwrite existing database? **\n"
+			<< "WARNING: ALL INFORMATION WILL BE LOST (Y/N): ";
+		cin >> overwrite;
+
+		if (tolower(overwrite) == 'n')
+		{
+			cout << "\nExiting program.\n";
+			exit(1);
+		}
+	}
+	else
+	{
+		cout << db_name << " does not yet exist!\n";
+	}
+
+	if ((d_base.db_exists() && tolower(overwrite) == 'y') || !(d_base.db_exists()))
+	{
 
 	d_base.create_database();
-
 	cout << "Database created at " << db_name << endl;
 
 	d_base.create_table();
+	}
 
 
 
