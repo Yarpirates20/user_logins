@@ -9,6 +9,7 @@
 //#include "md5.h"
 #include "sha256.h"
 #include "DB.h"
+#include "User.h"
 using namespace std;
 using json = nlohmann::json;
 
@@ -20,6 +21,7 @@ bool is_valid_credentials(string, string);
 
 int main(int argc, char* argv[])
 {
+	// Create db and table
 	DB d_base;
 	d_base.set_db_name();
 
@@ -57,17 +59,30 @@ int main(int argc, char* argv[])
 	d_base.create_table();
 	}
 
+	// Create user
+	User user;
 
+	user.set_username();
+
+	string uname = user.get_username();
+
+	user.input_password();
+
+	string pwd = user.get_hash();
+
+	user.add_to_table(uname, pwd, d_base);
 
 	string username, password;
 
-	// ##### DEBUG COMMENT OUT ##### 
-	// Get user inputs 
-	cout << "Enter username: ";
-	cin >> username;
+	d_base.table_exists();
 
-	cout << "Enter password: ";
-	cin >> password;
+	//// ##### DEBUG COMMENT OUT ##### 
+	//// Get user inputs 
+	//cout << "Enter username: ";
+	//cin >> username;
+
+	//cout << "Enter password: ";
+	//cin >> password;
 
 	if (is_valid_credentials(username, password))
 	{
