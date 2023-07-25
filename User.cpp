@@ -78,3 +78,46 @@ int User::add_to_table(std::string uname, std::string pwd_hash, DB dname)
 	sqlite3_close(db);
 	return 0;
 }
+
+int User::create_username_vector(string uname, DB dname)
+{
+	sqlite3* db;
+	sqlite3_stmt* stmt;
+	string sql = "SELECT username from sqlite_master WHERE name = 'users';";
+
+	int rc = sqlite3_open(dname.get_name().c_str(), &db);
+
+	if (rc)
+	{
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		return (0);
+	}
+	else
+	{
+		fprintf(stderr, "Opened database successfully\n");
+	}
+
+	// Prepared statement
+	rc = sqlite3_prepare_v2(db, sql.c_str(), sql.length(), &stmt, nullptr);
+
+	if (rc != SQLITE_OK)
+	{
+		fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
+		return (0);
+	}
+	else
+	{
+		while ((rc = sqlite3_step(stmt)) == SQLITE_ROW)
+		{
+			unameVec.push_back(sqlite3_column_text(stmt, 0));
+			//const unsigned char* sent = sqlite3_column_text(stmt, 0);
+		}
+	}
+
+	sqlite3_finalize(stmt);
+	sqlite3_close(db);
+
+	cout << format("Usernames from {} are now in a vector.", dname.get_name()) << endl;
+
+	return 0;
+}

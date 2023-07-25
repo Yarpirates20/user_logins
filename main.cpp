@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 
 		cout << db_name << " is all ready an existing database.\n\n";
 
-		d_base.table_exists();
+		//d_base.table_exists();
 
 		cout << "\n\n**Overwrite existing database? **\n"
 			<< "WARNING: ALL INFORMATION WILL BE LOST (Y/N): ";
@@ -62,6 +62,7 @@ int main(int argc, char* argv[])
 	// Create user
 	User user;
 
+	cin.ignore();
 	user.set_username();
 
 	string uname = user.get_username();
@@ -105,7 +106,7 @@ bool is_valid_credentials(string uname, string passwd)
 	ifstream infile("logins.json");
 	json data = json::parse(infile);
 
-	
+	//TODO: query database to see if user exists and if password_hash matches
 
 	if (data.count(uname) != 0 && data.at(uname) == passwd)
 	{
